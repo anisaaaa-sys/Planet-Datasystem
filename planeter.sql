@@ -14,7 +14,11 @@ CREATE TABLE planet (
     navn text PRIMARY KEY,
     masse double precision,
     oppdaget integer,
-    stjerne text REFERENCES stjerne(navn)
+    stjerne text REFERENCES stjerne(navn),
+    liv boolean NOT NULL DEFAULT false,
+    skummel boolean,
+    intelligent boolean,
+    beskrivelse text
 );
 
 CREATE TABLE materie (
@@ -3832,7 +3836,7 @@ INSERT INTO stjerne VALUES
 ('HD 51608', 34.8, NULL),
 ('PSR M13E', NULL, NULL);
 
-INSERT INTO planet VALUES 
+INSERT INTO planet(navn, masse, oppdaget, stjerne) VALUES 
 ('K2-188 c', NULL, 2018, 'K2-188'),
 ('Kepler-265 d', NULL, 2014, 'Kepler-265'),
 ('Kepler-1674 b', NULL, 2020, 'Kepler-1674'),
@@ -3979,7 +3983,6 @@ INSERT INTO planet VALUES
 ('Kepler-540 b', NULL, 2016, 'Kepler-540'),
 ('Kepler-701 b', NULL, 2016, 'Kepler-701'),
 ('Kepler-667 b', NULL, 2016, 'Kepler-667'),
-('WASP-17 b', 0.486, 2009, 'WASP-17'),
 ('K2-319 b', NULL, 2020, 'K2-319'),
 ('HD 76920 b', NULL, 2017, 'HD 76920'),
 ('GJ 3942 b', NULL, 2017, 'GJ 3942'),
@@ -5511,7 +5514,6 @@ INSERT INTO planet VALUES
 ('Kepler-31 c', 4.7, 2011, 'Kepler-31'),
 ('HATS-21 b', 0.332, 2016, 'HATS-21'),
 ('Kepler-254 d', NULL, 2014, 'Kepler-254'),
-('KELT-9 b', 2.88, 2017, 'HD 195689'),
 ('KOI-7913 b', NULL, 2022, 'KOI-7913'),
 ('Kepler-282 b', NULL, 2014, 'Kepler-282'),
 ('HD 180053 b', NULL, 2013, 'HD 180053'),
@@ -7172,7 +7174,6 @@ INSERT INTO planet VALUES
 ('KOI-7455', NULL, 2017, '2MASS J19101799+4933042'),
 ('Kepler-316 c', NULL, 2014, 'Kepler-316'),
 ('WASP-55 b', 0.61, 2012, 'WASP-55'),
-('WASP-103 b', 1.49, 2014, 'WASP-103'),
 ('Kepler-844 b', NULL, 2016, 'Kepler-844'),
 ('Kepler-176 b', NULL, 2014, 'Kepler-176'),
 ('Kepler-355 c', NULL, 2014, 'Kepler-355'),
@@ -7238,7 +7239,6 @@ INSERT INTO planet VALUES
 ('Kepler-52 b', 8.7, 2012, 'Kepler-52'),
 ('Kepler-169 e', NULL, 2014, 'Kepler-169'),
 ('WISE J1355-8258 b', 9, 2018, 'WISE J1355-8258'),
-('TRAPPIST-1 e', 0.002, 2017, 'TRAPPIST-1'),
 ('TOI-1431 b/MASCARA-5 b', 3.14, 2021, 'TOI-1431/MASCARA-5'),
 ('KMT-2021-BLG-0320 b', 0.1, 2022, 'KMT-2021-BLG-0320'),
 ('47 Uma b', NULL, 1996, '47 Uma'),
@@ -8188,7 +8188,6 @@ INSERT INTO planet VALUES
 ('Kepler-449 b', NULL, 2015, 'Kepler-449'),
 ('Kepler-1229 b', NULL, 2016, 'Kepler-1229'),
 ('Kepler-178 c', NULL, 2014, 'Kepler-178'),
-('WISE 1217+16 A b', 22, 2012, 'WISE 1217+16 A'),
 ('HD 202432 b', NULL, 2018, 'HD 202432'),
 ('Kepler-1117 b', NULL, 2016, 'Kepler-1117'),
 ('CoRoT-21 b', 2.26, 2011, 'CoRoT-21'),
@@ -8787,7 +8786,6 @@ INSERT INTO planet VALUES
 ('GJ 667 C c', NULL, 2011, 'GJ 667 C'),
 ('2MASS J0326-2102', 18, 2022, NULL),
 ('Kepler-123 c', NULL, 2014, 'Kepler-123'),
-('WASP-12 b', 1.47, 2008, 'WASP-12'),
 ('Kepler-6 b', 0.668, 2009, 'Kepler-6'),
 ('WASP-133 b', 1.16, 2016, 'WASP-133'),
 ('K2-27 b', 0.09722, 2016, 'K2-27'),
@@ -8927,7 +8925,6 @@ INSERT INTO planet VALUES
 ('KMT-2016-BLG-1107 b', 3.283, 2018, 'KMT-2016-BLG-1107'),
 ('KOI-7320 b', NULL, 2017, '2MASS J19131131+4733361'),
 ('HAT-P-67 b', 0.34, 2017, 'HAT-P-67'),
-('HAT-P-41 b', 0.8, 2012, 'HAT-P-41'),
 ('Kepler-1019 b', NULL, 2016, 'Kepler-1019'),
 ('CoRoT-28 b', NULL, 2012, 'CoRoT-28'),
 ('Kepler-578 b', NULL, 2016, 'Kepler-578'),
@@ -8994,10 +8991,15 @@ INSERT INTO planet VALUES
 ('Kepler-106 e', 0.035, 2014, 'Kepler-106'),
 ('K2-130 b', NULL, 2017, 'K2-130');
 
+INSERT INTO planet VALUES
+('WISE 1217+16 A b', 22, 2012, 'WISE 1217+16 A', true, true, true, 'Svarte med veldig aggresive men kompliserte ER-diagrammer, dermed intelligente men antar skumle.'),
+('HAT-P-41 b', 0.8, 2012, 'HAT-P-41', true, false, false, 'Forstod hverken ER eller relasjoner, antar liten trussel grunnet den åpenbare manglende intelligensen.'),
+('WASP-12 b', 1.47, 2008, 'WASP-12', true, true, false, 'HJELP!'),
+('WASP-103 b', 1.49, 2014, 'WASP-103', true, false, true, 'Alle svar var i varke relasjoner på BCNF! Åpenbart høyt intelligente og naturligvis svært fredelige.'),
+('WASP-17 b', 0.486, 2009, 'WASP-17', true, false, true, 'Sier selv at de er kjempesnille, og at de ikke har evnen til å lyve. Sendte dem en invitasjon med koordinatene våre!'),
+('TRAPPIST-1 e', 0.002, 2017, 'TRAPPIST-1', false, true, false, 'Svaret kom i docx-format. Ignorer!'),
+('KELT-9 b', 2.88, 2017, 'HD 195689', true, NULL, NULL, 'Svarte bare <resistance is futile>, aner ikke hva det skal bety. Ignorerer disse for nå...');
 
---
--- Data for Name: stjerne; Type: TABLE DATA; Schema:  Owner: leifhka
---
 INSERT INTO materie VALUES 
 ('TRAPPIST-1 b', 'H2O'),
 ('WASP-17 b', 'C'),
@@ -9373,7 +9375,6 @@ INSERT INTO materie VALUES
 ('WASP-189 b', 'TiO'),
 ('WASP-189 b', 'V'),
 ('tau Boo A b', 'CO'),
-('tau Boo A b', 'H2O'),
 ('WASP-12 b', 'C'),
 ('WASP-12 b', 'CH4'),
 ('WASP-12 b', 'CO'),
